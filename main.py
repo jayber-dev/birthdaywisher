@@ -20,9 +20,10 @@ for i in range(0, len(df_dict)):
 
 rand_num = random.randint(1, 3)
 
-with open("/letter_templates/letter_1.txt") as file:
-    print(file)
-
+with open("letter_1.txt") as file:
+    to_send = (file.read())
+    to_send_updated = to_send.replace("NAME", df_dict[0]['name'])
+    print(to_send_updated)
 # 3. If step 2 is true, pick a random letter from letter templates and replace the [NAME] with the person's actual name from birthdays.csv
 
 # 4. Send the letter generated in step 3 to that person's email address.
