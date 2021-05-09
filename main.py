@@ -5,8 +5,10 @@ import datetime as dt
 import smtplib
 
 EMAIL = "jayber1@yahoo.com"
-PASSWORD = "fzxgmakhpdnwtjqk"
+PASSWORD = "yvfngtkvredjkygx"
 
+# - pass work "yvfngtkvredjkygx"
+# - pass marina "fzxgmakhpdnwtjqk"
 # 2. Check if today matches a birthday in the birthdays.csv
 # ----------------------------- csv handling ------------------------- #
 df = pandas.read_csv("birthdays.csv")
@@ -25,20 +27,19 @@ for i in range(0, len(df_dict)):
     df_data = f"{df_dict[i]['month']}/{df_dict[i]['day']}"
     if dt_date == df_data:
         with open(f"letter_templates/letter_{rand_num}.txt") as file:
-            to_send_file = (file.read())
-            to_send_updated = to_send_file.replace("Dear", "subject: dear")
-            to_send_file = to_send_updated.replace("[NAME]", f"{df_dict[i]['name']}")
-            to_send_updated = to_send_file.replace("hey", "subject: hey")
-            print(to_send_updated)
+            to_send_file = file.read()
+            to_send_updated = to_send_file.replace("[NAME]", f"{df_dict[i]['name']}")
 
-        connection = smtplib.SMTP("smtp.mail.yahoo.com")
+            print(to_send_updated)
+            print(df_dict[i]["email"])
+        
+        connection = smtplib.SMTP("smtp.mail.yahoo.com",465)
         connection.starttls()
         connection.login(user=EMAIL, password=PASSWORD)
-        connection.sendmail(to_addrs=EMAIL, from_addr=EMAIL, msg=to_send_updated)
+        connection.sendmail(to_addrs=EMAIL, from_addr=df_dict[i]["email"], msg=f"subject: happy happy yay yay \n\n {to_send_updated}")
         connection.close()
-        # #
-        #
-        #
+        print("sending seccessful")
+       
 
 # 3. If step 2 is true, pick a random letter from letter templates and replace the [NAME] with the person's actual name from birthdays.csv
 
